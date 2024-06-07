@@ -1,9 +1,13 @@
-# docs [![Discord](https://img.shields.io/discord/289587909051416579.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2)](https://discord.gg/papermc) ![Deployment Status](https://img.shields.io/github/deployments/PaperMC/docs/production?label=deployment&logo=github) ![License](https://img.shields.io/github/license/PaperMC/docs)
+# docs [![Discord](https://img.shields.io/discord/289587909051416579.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2)](https://discord.splatgames.de)
 
 [vercel]: https://vercel.com?utm_source=papermc&utm_campaign=oss
 
-This is the repository for all project documentation under the PaperMC umbrella. Content in this
-repository is published to [docs.papermc.io](https://docs.papermc.io) for viewing.
+This is the repository for all project documentation under Splatgames.de. Content in this
+repository is published to [docs.splatgames.de](https://docs.splatgames.de) for viewing.
+
+## Forked
+
+This repository is forked from the [PaperMC/docs](https://github.com/PaperMC/docs) repository.
 
 ## Getting Started
 
@@ -19,7 +23,7 @@ How to get docs running on your local machine for development.
 1. Clone the repository. If you plan to make changes, create a fork first!
 
 ```bash
-$ git clone https://github.com/PaperMC/docs
+$ git clone https://github.com/splatgames-dev/Documentation
 ```
 
 2. Install all required dependencies.
