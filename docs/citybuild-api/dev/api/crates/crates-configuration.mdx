@@ -1,0 +1,249 @@
+---
+slug: /dev/api/crates/crates-configuration
+description: Configuring the Crates System for the CityBuild System Plugin
+---
+
+# Crates Konfiguration
+
+Willkommen zur Konfigurationsdokumentation für das Splatgames.de CityBuild System Plugin. In diesem Dokument findest du alle notwendigen Informationen zur Konfiguration des Crates-Systems.
+
+## Inhaltsverzeichnis
+
+1. [Einführung](#einführung)
+2. [Standard-Template](#standard-template)
+3. [Parameterbeschreibung](#parameterbeschreibung)
+    1. [Der 'version' Parameter](#der-version-parameter)
+    2. [Der 'events' Parameter](#der-events-parameter)
+    3. [Der 'start_date' und 'end_date' Parameter](#der-start_date-und-end_date-parameter)
+    4. [Der 'banner_char' Parameter](#der-banner_char-parameter)
+    5. [Der 'banner' Parameter](#der-banner-parameter)
+    6. [Der 'name' Parameter](#der-name-parameter)
+    7. [Der 'featured_item' Parameter](#der-featured_item-parameter)
+    8. [Der 'featured_epics' Parameter](#der-featured_epics-parameter)
+4. [Häufige Probleme](#häufige-probleme)
+5. [FAQ](#faq)
+
+## Einführung
+
+Das Crates-System ermöglicht es, verschiedene Event-Banner zu erstellen, die auf dem Server im Crates-System angezeigt werden. Jeder Event-Banner kann dabei individuell konfiguriert werden. Es handelt sich hierbei um eine Art Lootbox-System, bei dem Spieler zufällige Belohnungen erhalten können. Damit alle Spieler die Chance haben, eine Belohnung zu erhalten, gibt es ein "Pity-System", welches so programmiert ist, dass Spieler nach einer bestimmten Anzahl an Versuchen zwingend eine Belohnung erhalten. Dies soll sicherstellen, dass auch Spieler, die lange kein Glück haben, eine Belohnung erhalten und frustrierte Spieler nicht leer ausgehen.
+
+## Standard-Template
+
+Die 'banner_event.yml' Datei ist die Konfigurationsdatei, die nach gewissen Kriterien erstellt werden muss, um ein Event-Banner zu erstellen. Hier ist ein Beispiel für die 'banner_event.yml' Datei:
+
+```yaml
+# event_banners.yml
+
+version: "1.0"
+events:
+  - identifier: "featured_1"
+    start_date: "2024-01-01T00:00:00Z"
+    end_date: "2024-01-01T00:00:00Z"
+    banner_char: "Unicode.Char"
+    banner:
+      - name: "translation.key"
+      - featured_item:
+          - item: "minecraft:dirt"
+            amount: 1
+            meta:
+              display_name: "&6Dirt"
+      - featured_epics:
+          - id: 1
+            item: "minecraft:diamond"
+            amount: 1
+            meta:
+              display_name: "&bDiamond"
+          - id: 2
+            item: "minecraft:iron_ingot"
+            amount: 1
+          - id: 3
+            item: "minecraft:gold_ingot"
+            amount: 1
+          - id: 4
+            item: "minecraft:emerald"
+            amount: 1
+  - identifier: "featured_2"
+    start_date: "2024-01-01T00:00:00Z"
+    end_date: "2024-01-01T00:00:00Z"
+    banner_char: "Unicode.Char"
+    banner:
+      - name: "translation.key"
+      - featured_item:
+          - item: "minecraft:STONE"
+            amount: 1
+            meta:
+              display_name: "&bDiamond"
+      - featured_epics:
+          - id: 1
+            item: "minecraft:iron_ingot"
+            amount: 1
+          - id: 2
+            item: "minecraft:gold_ingot"
+            amount: 1
+          - id: 3
+            item: "minecraft:emerald"
+            amount: 1
+          - id: 4
+            item: "minecraft:diamond"
+            amount: 1
+```
+
+## Parameterbeschreibung
+
+Hier sind alle Parameter für die Konfiguration der 'banner_event.yml' Datei aufgelistet:
+
+#### Der 'version' Parameter
+
+Es gibt eine Vielzahl von Parametern, die in der 'banner_event.yml' Datei konfiguriert werden können. Der erste Parameter ist der 'version' Parameter, der die Version der Konfigurationsdatei angibt. Dieser muss zwingend vorhanden sein, damit der Parser die Datei korrekt einlesen und verarbeiten kann.
+
+#### Versionen des Parsers
+
+| Version | Änderungen                |
+|---------|---------------------------|
+| 1.0     | Erste Version des Parsers |
+
+#### Interne Version des Parsers
+
+| Version | Beschreibung                                                       |
+|---------|--------------------------------------------------------------------|
+| 1.0i    | Eine interne Version des Parsers zum parsing des Permanent-Banners |
+
+### Der 'events' Parameter
+
+Als Nächstes folgt der 'events' Parameter, der eine Liste von Event-Bannern enthält. Jeder Event-Banner hat eine eindeutige 'identifier' Eigenschaft, die als Schlüssel für die Event-Banner verwendet wird.
+
+#### Identifier Beschreibung
+
+| Identifier | Beschreibung                                                                                                                               |
+|------------|--------------------------------------------------------------------------------------------------------------------------------------------|
+| featured_1 | Wird als erstes angezeigt, wenn der Spieler das Crates-System öffnet.                                                                      |
+| featured_2 | Wird als zweites angezeigt, wenn der Spieler das Crates-System öffnet.                                                                     |
+| event      | Wird als Event-Banner angezeigt, wenn ein Event auf dem Server stattfindet. Im normalfall wird dieser Banner nur für kurze Zeit angezeigt. |
+
+#### Interner Identifier für den Event-Banner
+
+| Identifier | Beschreibung                      |
+|------------|-----------------------------------|
+| permanent  | Dieser Banner ist immer sichtbar. |
+
+### Der 'start_date' und 'end_date' Parameter
+
+Der 'start_date' und 'end_date' Parameter geben an, wann der Event-Banner angezeigt wird.
+
+:::info[Information]
+
+Nach dem 'start_date' wird der Event-Banner angezeigt und kann von den Spielern geöffnet werden. Zeitgleich wird das 'end_date' den Spielern angezeigt, um zu wissen, wie lange der Event-Banner noch geöffnet werden kann.
+
+Nach dem 'end_date' wird der Event-Banner nicht mehr angezeigt und kann nicht mehr geöffnet werden. Normalerweise wird der Event-Banner nach dem 'end_date' automatisch geschlossen und der nächste fängt innerhalb der nächsten Stunden an (falls konfiguriert).
+
+:::
+
+Banner fangen normalerweise um 18:00 Uhr GMT+2 an und enden um 09:00 Uhr GMT+2.
+
+#### Formatierung
+
+```yaml
+start_date: "2024-01-01T00:00:00Z"
+end_date: "2024-01-01T00:00:00Z"
+```
+
+### Der 'banner_char' Parameter
+
+Der 'banner_char' Parameter gibt an, welches Unicode-Zeichen für den Event-Banner verwendet wird. Es gibt eine Vielzahl von Unicode-Zeichen, die für den Event-Banner verwendet werden können. Alle Unicode-Zeichen, die in UTF-8 kodiert sind, können für den Event-Banner verwendet werden.
+
+Unicode-Zeichen können auf der offiziellen Unicode-Website gefunden werden: Unicode-Website
+
+:::info[Hinweis]
+
+Das Zeichen muss im Resourcepack bei den Fonts eingetragen werden, damit es korrekt angezeigt wird. Die Standard-Fonts sind im /fonts Ordner des Resourcepacks zu finden in der Datei 'banners.json'. Sollte die Datei nicht vorhanden sein, kann sie einfach erstellt werden.
+
+Die Datei muss im JSON-Format sein und nach den offiziellen Mojang-Resourcepack Formatierung erstellt werden.
+
+:::
+
+### Der 'banner' Parameter
+
+Der 'banner' Parameter gibt wichtige Informationen über den Event-Banner an. Der 'banner' Parameter enthält eine Liste von 'name', 'featured_item' und 'featured_epics'.
+
+### Der 'name' Parameter
+
+Der 'name' Parameter gibt den Namen des Event-Banners an. Er ist in der Regel über einen 'Translation-Key' definiert, der für die Lokalisierung des Event-Banners verwendet wird. Im Normalfall wird der 'Translation-Key' in einer internen Datei gespeichert, die für die Lokalisierung des Event-Banners verwendet wird.
+
+#### Beispiel
+
+Ein Beispiel für einen Translation-Key ist 'crates.crate.from_ashes_to_dust.banner_name'.
+
+#### Sprache	Datei	Übersetzung
+
+| Sprache   | Datei                  | Übersetzung        |
+|-----------|------------------------|--------------------|
+| Deutsch   | messages_de.properties | Von Asche zu Staub |
+| Englisch  | messages_en.properties | From Ashes to Dust |
+| Japanisch | messages_ja.properties | 灰から塵へ              |
+
+### Der 'featured_item' Parameter
+
+Der 'featured_item' Parameter gibt die Belohnungen an, die der Spieler erhalten kann, wenn er den Event-Banner öffnet. Dieses Item wird in der Regel extra angepriesen und ist meistens ein seltenes Item, das der Spieler erhalten kann. Das Featured-Item kann in der Regel ebenfalls spezielle Eigenschaften und/oder Fähigkeiten haben, die es von anderen Items unterscheiden.
+
+Für das Featured-Item gibt es das sogenannte "Pity-System", welches dafür sorgt, dass Spieler nach einer bestimmten Anzahl an Versuchen zwingend eine Belohnung erhalten.
+
+#### Beispiel
+
+```yaml
+featured_item:
+  - item: "minecraft:dirt"
+    amount: 1
+    meta:
+      display_name: "&6Dirt"
+```
+
+### Der 'featured_epics' Parameter
+
+Der 'featured_epics' Parameter gibt die epischen Belohnungen an, die der Spieler erhalten kann, wenn er den Event-Banner öffnet. Diese epischen Belohnungen sind in der Regel besonders wertvoll und selten.
+
+:::warning[Wichtig]
+
+Es dürfen nicht mehr oder weniger als 4 Items sein, da die Konfiguration sonst fehlerhaft ist und der Event-Banner nicht korrekt angezeigt wird. Jedes Item muss mit 'id' nummeriert werden, damit der Parser die Items korrekt einlesen und verarbeiten kann.
+
+:::
+
+## Häufige Probleme
+
+Hier sind alle häufigen Probleme aufgelistet, die bei der Konfiguration der 'banner_event.yml' Datei auftreten können.
+
+#### Der Event-Banner wird nicht angezeigt
+
+Ein häufiges Problem ist, dass der Event-Banner nicht angezeigt wird, obwohl die 'banner_event.yml' Datei korrekt konfiguriert wurde.
+
+##### Gründe
+- Der 'start_date' und 'end_date' Parameter sind nicht korrekt konfiguriert.
+- Der 'banner_char' Parameter ist zwar konfiguriert, aber das Unicode-Zeichen ist nicht im Resourcepack vorhanden.
+- Der 'banner' Parameter ist nicht korrekt konfiguriert und enthält Fehler.
+- Das Plugin ist nicht korrekt installiert und konfiguriert.
+- Das Plugin wurde fehlerhaft gestartet oder konfiguriert.
+- Der Event-Banner wird nicht korrekt angezeigt
+
+Wieder ein häufiges Problem ist, dass der Event-Banner nicht korrekt angezeigt wird oder ein fehlerhafter Unicode-Char angezeigt wird.
+
+#### Gründe
+- Der 'banner_char' Parameter ist zwar konfiguriert, aber das Unicode-Zeichen ist nicht im Resourcepack vorhanden.
+- Der 'banner_char' Parameter ist zwar konfiguriert, aber das Unicode-Zeichen ist fehlerhaft.
+- Der Event-Banner wird nicht korrekt geöffnet
+- Ein weiteres Problem, welches dadurch entsteht, wenn das Plugin nicht ordnungsgemäß installiert oder konfiguriert wurde.
+
+## FAQ
+Hier sind alle häufig gestellten Fragen aufgelistet, die bei der Konfiguration der 'banner_event.yml' Datei auftreten können.
+
+#### Wie kann ich den Event-Banner konfigurieren?
+Der Event-Banner kann in der 'banner_event.yml' Datei konfiguriert werden. In dieser Datei sind alle Parameter aufgelistet, die für die Konfiguration des Event-Banners benötigt werden.
+
+Es ist immer ratsam, am Anfang der Datei folgenden Header zu setzen:
+
+```yaml
+# event_banners.yml
+```
+
+Ein Beispiel für die 'banner_event.yml' Datei findest du [hier](#standard-template).
+
+Beachte, dass Banner in deinem Minecraft Server plugins/CityBuild/banners/ Ordner gespeichert werden müssen. Du musst in diesem Verzeichnis ein weiteres Verzeichnis anlegen, wobei hierbei es egal ist, wie das Verzeichnis benannt wird. (Beispiel: plugins/CityBuild/banners/super_cooler_banner/)
+In diesem Verzeichnis müssen die 'banner_event.yml' Datei gespeichert werden.

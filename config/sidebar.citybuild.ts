@@ -41,6 +41,14 @@ const splatgames: SidebarsConfig = {
                 "dev/api/event-api/custom-events",
               ],
             },
+            {
+              type: "category",
+              label: "Crates",
+              collapsed: true,
+              items: [
+                "dev/api/crates/crates-configuration",
+              ],
+            },
             "dev/api/roadmap",
           ],
         },
