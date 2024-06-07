@@ -69,7 +69,7 @@ function LastUpdatedInCommit({ lastUpdatedIn }: { lastUpdatedIn: string }): JSX.
     <>
       <span> in </span>
       <b>
-        <Link to={"https://github.com/PaperMC/docs/commit/" + lastUpdatedIn}>{lastUpdatedIn}</Link>
+        <Link to={"https://github.com/splatgames-dev/Documentation/commit/" + lastUpdatedIn}>{lastUpdatedIn}</Link>
       </b>
     </>
   );
