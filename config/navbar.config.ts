@@ -39,17 +39,12 @@ const navbar: Omit<Navbar, "style" | "hideOnScroll"> = {
       label: "CityBuild-API",
       to: "/citybuild-api",
       position: "left",
-      activeBaseRegex: "(\\/citybuild)(.+)?",
+      activeBaseRegex: "(\\/citybuild-api)(.+)?",
       items: [
-        {
-          label: "Administration",
-          to: "/citybuild-api/admin",
-          activeBaseRegex: "(\\/citybuild/)(?!dev)(.+)?",
-        },
         {
           label: "Development",
           to: "/citybuild-api/dev",
-          activeBaseRegex: "\\/citybuild\\/dev.*",
+          activeBaseRegex: "\\/citybuild-api\\/dev.*",
         },
       ],
     },

@@ -153,37 +153,11 @@ const config: Config = {
       "content-docs",
       {
         ...docsCommon,
-        id: "folia",
-        path: "docs/folia",
-        routeBasePath: "folia",
-        sidebarPath: require.resolve("./config/sidebar.folia"),
+        id: "citybuild-api",
+        path: "docs/citybuild-api",
+        routeBasePath: "/citybuild-api",
+        sidebarPath: require.resolve("./config/sidebar.citybuild"),
         lastVersion: "current",
-        versions: {
-          current: {
-            label: "1.20",
-            path: "",
-          },
-        },
-      },
-    ],
-    [
-      "content-docs",
-      {
-        ...docsCommon,
-        id: "velocity",
-        path: "docs/velocity",
-        routeBasePath: "velocity",
-        sidebarPath: require.resolve("./config/sidebar.velocity"),
-      },
-    ],
-    [
-      "content-docs",
-      {
-        ...docsCommon,
-        id: "waterfall",
-        path: "docs/waterfall",
-        routeBasePath: "waterfall",
-        sidebarPath: require.resolve("./config/sidebar.waterfall"),
       },
     ],
     [
