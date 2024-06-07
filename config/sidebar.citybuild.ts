@@ -99,7 +99,10 @@ const splatgames: SidebarsConfig = {
         type: "doc",
         id: "contributing/README",
       },
-      items: ["contributing/events"],
+      items: [
+        "contributing/events",
+        "contributing/active_contributors",
+      ],
     },
   ],
 };
