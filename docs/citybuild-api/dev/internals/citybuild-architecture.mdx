@@ -5,23 +5,42 @@ description: The architecture of CityBuild and the CityBuild API.
 
 # CityBuild Architektur
 
-Die CityBuild Architektur ist sehr komplex und besteht aus mehreren Komponenten, die miteinander interagieren.
-Die wichtigsten Komponenten auf die der Kernel aufbaut sind:
+Die CityBuild Architektur ist sehr komplex und besteht aus mehreren Komponenten, die miteinander interagieren. Die wichtigsten Komponenten, auf die der Kernel aufbaut, sind:
 
 - ProtocolLib
 - PlaceholderAPI
 
-Diese Komponenten sind für die Kommunikation zwischen dem Server und dem Client verantwortlich.
-Sie ermöglichen es, dass der Server mit dem Client kommunizieren kann und umgekehrt.
+Diese Komponenten sind für die Kommunikation zwischen dem Server und dem Client verantwortlich. Sie ermöglichen es, dass der Server mit dem Client kommunizieren kann und umgekehrt.
 
 ## ProtocolLib
 
-ProtocolLib ist ein Plugin, das es ermöglicht, mit dem Client zu kommunizieren.
-Es ermöglicht es, Daten zwischen dem Server und dem Client zu übertragen und zu empfangen.
-Dies ist notwendig, um die Funktionen des CityBuild Servers zu implementieren.
+**ProtocolLib** ist ein Plugin, das es ermöglicht, mit dem Client zu kommunizieren. Es erlaubt das Übertragen und Empfangen von Daten zwischen dem Server und dem Client. Dies ist notwendig, um die Funktionen des CityBuild Servers zu implementieren. Durch ProtocolLib können Serverentwickler direkt auf Netzwerkpakete zugreifen und diese modifizieren, was eine hohe Flexibilität bei der Umsetzung spezifischer Funktionen bietet.
+
+### Hauptfunktionen von ProtocolLib:
+
+- **Packet Management**: Ermöglicht das Abfangen, Lesen und Modifizieren von Netzwerkpaketen.
+- **Kompatibilität**: Unterstützt verschiedene Versionen von Minecraft, was es einfacher macht, plattformübergreifende Lösungen zu entwickeln.
+- **Leistungsoptimierung**: Bietet Werkzeuge zur Optimierung der Datenübertragung zwischen Server und Client.
 
 ## PlaceholderAPI
 
-PlaceholderAPI ist ein Plugin, das es ermöglicht, Platzhalter in Nachrichten zu ersetzen.
-Dies ist notwendig, um die Funktionen des CityBuild Servers zu implementieren.
+**PlaceholderAPI** ist ein Plugin, das es ermöglicht, Platzhalter in Nachrichten zu ersetzen. Dies ist notwendig, um dynamische Inhalte in Servernachrichten, Befehlen und anderen Texten zu integrieren. PlaceholderAPI unterstützt eine Vielzahl von Platzhaltern, die von verschiedenen Plugins bereitgestellt werden können, und bietet somit eine flexible Lösung zur Anpassung von Texten im Spiel.
 
+### Hauptfunktionen von PlaceholderAPI:
+
+- **Platzhalterersetzung**: Ermöglicht das Einfügen dynamischer Inhalte wie Spielerstatistiken, Serverinformationen und mehr.
+- **Erweiterbarkeit**: Unterstützt eine Vielzahl von Erweiterungen und Add-ons, die zusätzliche Platzhalter bereitstellen.
+- **Einfache Integration**: Kann leicht in andere Plugins und Systeme integriert werden, um deren Funktionalität zu erweitern.
+
+## Interaktion zwischen den Komponenten
+
+Die Interaktion zwischen ProtocolLib und PlaceholderAPI ist entscheidend für die Funktionalität des CityBuild Servers. Während ProtocolLib die technische Basis für die Kommunikation und Datenübertragung bildet, sorgt PlaceholderAPI für die dynamische Anpassung und Darstellung von Inhalten. Diese Kombination ermöglicht es, eine reibungslose und interaktive Spielerfahrung zu schaffen.
+
+### Beispiel einer typischen Interaktion:
+
+1. **Datenübertragung**: ProtocolLib fängt ein Paket vom Client ab, das eine bestimmte Spieleraktion enthält.
+2. **Datenverarbeitung**: Der CityBuild Kernel verarbeitet diese Aktion und bestimmt, welche Nachricht oder welches Ereignis ausgelöst werden soll.
+3. **Platzhalterersetzung**: PlaceholderAPI ersetzt in der Nachricht dynamische Inhalte wie Spielername, Punktzahl oder Serverstatus.
+4. **Rückübertragung**: ProtocolLib sendet die angepasste Nachricht zurück an den Client.
+
+Diese nahtlose Integration der Komponenten ermöglicht es, komplexe Funktionen und Systeme innerhalb des CityBuild Servers zu realisieren.

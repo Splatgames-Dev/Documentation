@@ -3,27 +3,60 @@ import { useCurrentSidebarCategory } from "@docusaurus/theme-common";
 
 # CityBuild Internals
 
-Die CityBuild Internals ist der Core des CityBuild Servers.
-Der Kernel ist das "CityBuild" Plugin und implementiert alle Funktionen aus der "CityBuild API".
-Dies bedeutet, dass alle Funktionen, die in der API verfügbar sind, auch im Kernel verfügbar sind.
+Die **CityBuild Internals** bilden den Kern des CityBuild Servers.
+Im Zentrum dieser Struktur steht das "CityBuild" Plugin, das als Kernel fungiert und sämtliche Funktionen der "CityBuild API" implementiert.
+Dies bedeutet, dass alle in der API verfügbaren Funktionen auch im Kernel nutzbar sind, was eine nahtlose Integration und Steuerung ermöglicht.
 
-Der Kernel ist das Herzstück des CityBuild Servers, was ihn sehr mächtig macht.
-Er ist in der Lage, alle Funktionen zu steuern und zu verwalten, die für den Betrieb eines CityBuild Servers erforderlich sind.
-Sollten Sie also eine Funktion benötigen, die in der API nicht verfügbar ist, können Sie diese im Kernel implementieren.
+Der Kernel, als das Herzstück des CityBuild Servers, verleiht ihm immense Leistungsfähigkeit.
+Er übernimmt die Steuerung und Verwaltung sämtlicher Funktionen, die für den reibungslosen Betrieb eines CityBuild Servers notwendig sind.
+Sollte eine spezifische Funktion in der API nicht verfügbar sein, besteht die Möglichkeit, den Kernel zu benutzen, um diese Funktionen zu verwenden.
+Dies bietet Entwicklern eine große Flexibilität und Anpassungsfähigkeit, allerdings sind dabei auch gewisse Risiken zu berücksichtigen.
+
+## Kernfunktionen und Vorteile des Kernels
+
+Der Kernel ermöglicht eine tiefgehende Kontrolle und Anpassung des CityBuild Servers.
+Zu den Hauptfunktionen gehören:
+
+- **Zentralisierte Verwaltung**: Der Kernel steuert alle wichtigen Funktionen des Servers und sorgt für deren effiziente Verwaltung.
+- **Erweiterbarkeit**: Entwickler können zusätzliche Funktionen benutzen, die im Kernel implementiert sind, um ihre Plugins zu erweitern.
+- **Performance**: Durch die direkte Implementierung im Kernel können Funktionen besonders performant ausgeführt werden.
+
+## Risiken und Empfehlungen
+
+Trotz der Vorteile, die der Kernel bietet, gibt es wichtige Gründe, vorsichtig zu sein:
 
 :::danger[Benutzen des Kernels]
 
-Wir raten dringend davon ab, den Kernel zu benutzen, da diese Funktionen ihr Plugin von einer Version abhängig macht und somit nicht mehr kompatibel mit anderen Versionen ist.
+Wir raten dringend davon ab, den Kernel direkt zu verwenden.
+Funktionen, die im Kernel implementiert sind, machen Ihr Plugin von einer spezifischen Version abhängig, was zu Kompatibilitätsproblemen mit anderen Versionen führen kann.
+Dies kann langfristig zu Instabilitäten und unerwarteten Fehlern führen.
 
 :::
 
 ## Benutzen des Kernels
 
-Das Benutzen des Kernel ist sehr komplex und erfordert ein tiefes Verständnis der CityBuild API.
-Es ist nicht empfehlenswert, den Kernel zu benutzen, da dies zu Problemen führen kann.
+Das Arbeiten mit dem Kernel erfordert ein tiefgehendes Verständnis der CityBuild API und der internen Architektur des Servers.
+Die Implementierung von Funktionen im Kernel ist komplex und kann leicht zu Problemen führen, wenn nicht sorgfältig vorgegangen wird.
 
-Der Kernel bietet interne Funktionen, die nicht in der API verfügbar sind.
-Dies macht es sehr attraktiv für Entwickler den Kernel zu benutzen, um Funktionen zu implementieren, die in der API nicht verfügbar sind.
-Dennoch ist hierbei Vorsicht geboten, da dies zu Problemen führen kann.
+### Schritte zur Nutzung des Kernels:
+
+1. **Verständnis der API**: Bevor Sie den Kernel verwenden, sollten Sie ein umfassendes Verständnis der CityBuild API erlangen.
+2. **Sorgfältige Planung**: Planen Sie genau, welche Funktionen Sie aus dem Kernel verwenden möchten und wie Sie diese in Ihr Plugin integrieren.
+3. **Testing und Validierung**: Führen Sie umfangreiche Tests durch, um sicherzustellen, dass Ihre Implementierungen stabil und kompatibel sind.
+4. **Dokumentation**: Dokumentieren Sie Ihre Änderungen und Implementierungen ausführlich, um zukünftige Wartung und Updates zu erleichtern.
+
+### Potenzielle Probleme
+
+Die Verwendung des Kernels birgt das Risiko von:
+
+- **Versionierungskonflikten**: Abhängigkeiten von spezifischen Versionen können dazu führen, dass Ihr Plugin nicht mehr mit zukünftigen Updates kompatibel ist.
+- **Instabilitäten**: Direkte Verwendung des Kernels kann zu unerwarteten Fehlern und Instabilitäten führen.
+- **Wartungsaufwand**: Funktionen, die vom Kernel implementiert wurden, erfordern eine kontinuierliche Wartung und Anpassung an neue Kernel-Versionen.m
+
+## Fazit
+
+Der Kernel ist ein mächtiges Werkzeug, das Entwicklern eine Vielzahl von Funktionen und Möglichkeiten bietet.
+Allerdings ist es wichtig, die Risiken und Herausforderungen zu verstehen, die mit der Verwendung des Kernels verbunden sind.
+Durch sorgfältige Planung, Testen und Dokumentation können Entwickler die Vorteile des Kernels nutzen und gleichzeitig die Risiken minimieren.
 
 <DocCardList items={useCurrentSidebarCategory().items} />
