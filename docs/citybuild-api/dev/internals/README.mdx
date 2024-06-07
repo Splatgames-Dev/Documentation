@@ -1,0 +1,29 @@
+import DocCardList from "@theme/DocCardList";
+import { useCurrentSidebarCategory } from "@docusaurus/theme-common";
+
+# CityBuild Internals
+
+Die CityBuild Internals ist der Core des CityBuild Servers.
+Der Kernel ist das "CityBuild" Plugin und implementiert alle Funktionen aus der "CityBuild API".
+Dies bedeutet, dass alle Funktionen, die in der API verfügbar sind, auch im Kernel verfügbar sind.
+
+Der Kernel ist das Herzstück des CityBuild Servers, was ihn sehr mächtig macht.
+Er ist in der Lage, alle Funktionen zu steuern und zu verwalten, die für den Betrieb eines CityBuild Servers erforderlich sind.
+Sollten Sie also eine Funktion benötigen, die in der API nicht verfügbar ist, können Sie diese im Kernel implementieren.
+
+:::danger[Benutzen des Kernels]
+
+Wir raten dringend davon ab, den Kernel zu benutzen, da diese Funktionen ihr Plugin von einer Version abhängig macht und somit nicht mehr kompatibel mit anderen Versionen ist.
+
+:::
+
+## Benutzen des Kernels
+
+Das Benutzen des Kernel ist sehr komplex und erfordert ein tiefes Verständnis der CityBuild API.
+Es ist nicht empfehlenswert, den Kernel zu benutzen, da dies zu Problemen führen kann.
+
+Der Kernel bietet interne Funktionen, die nicht in der API verfügbar sind.
+Dies macht es sehr attraktiv für Entwickler den Kernel zu benutzen, um Funktionen zu implementieren, die in der API nicht verfügbar sind.
+Dennoch ist hierbei Vorsicht geboten, da dies zu Problemen führen kann.
+
+<DocCardList items={useCurrentSidebarCategory().items} />

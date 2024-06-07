@@ -46,6 +46,18 @@ const splatgames: SidebarsConfig = {
         },
         {
           type: "category",
+          label: "Internals",
+          collapsed: true,
+          link: {
+            type: "doc",
+            id: "dev/internals/README",
+          },
+          items: [
+            "dev/internals/citybuild-architecture",
+          ],
+        },
+        {
+          type: "category",
           label: "Reference",
           link: {
             type: "generated-index",
