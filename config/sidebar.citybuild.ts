@@ -49,6 +49,14 @@ const splatgames: SidebarsConfig = {
                 "dev/api/crates/crates-configuration",
               ],
             },
+            {
+              type: "category",
+              label: "Rest API",
+              collapsed: true,
+              items: [
+                "dev/api/rest/paths",
+              ],
+            },
             "dev/api/roadmap",
           ],
         },

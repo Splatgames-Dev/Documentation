@@ -1,0 +1,68 @@
+---
+slug: /dev/api/rest/paths
+description: The paths that can be accessed via the rest api of the CityBuild API. (api.splatgames.de)
+---
+
+# Pfadübersicht der CityBuild API
+
+Diese Seite zeigt die Pfade, die über die REST-API der CityBuild API abgerufen werden können.
+Ebenfalls werden weitere Informationen zu den Pfaden bereitgestellt wie z.B. die Art der Anfrage, die benötigten Berechtigungen und die Antwort.
+Des Weiteren wird auch beschrieben, wie die Anfrage aufgebaut werden muss.
+
+## Spieler
+
+Spieler können über die REST-API abgefragt werden.
+Spieler sind die Personen, die auf dem CityBuild-Server aktiv online sind.
+Hierbei werden im Normalfall nur die Namen der Spieler abgefragt.
+
+### GET /players
+
+#### Beschreibung
+
+Mit diesem Pfad können alle Spieler abgefragt werden, die sich aktuell auf dem CityBuild-Server befinden.
+
+#### Anfrage
+
+```http
+GET /players
+```
+
+#### Antwort
+
+```json
+{
+  "players": [
+    "Spieler1",
+    "Spieler2",
+    "Spieler3"
+  ]
+}
+```
+
+#### Berechtigungen
+
+- `READ_PLAYERS`
+
+### GET /players/&#123;player&#125;
+
+#### Beschreibung
+
+Mit diesem Pfad kann ein spezifischer Spieler abgefragt werden.
+
+#### Anfrage
+
+```http
+GET /players/Spieler1
+```
+
+#### Antwort
+
+```json
+{
+  "player": "Spieler1"
+}
+```
+
+#### Berechtigungen
+
+- `READ_PLAYERS`
