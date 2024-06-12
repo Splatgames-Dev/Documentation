@@ -5,64 +5,221 @@ description: The paths that can be accessed via the rest api of the CityBuild AP
 
 # Pfadübersicht der CityBuild API
 
-Diese Seite zeigt die Pfade, die über die REST-API der CityBuild API abgerufen werden können.
-Ebenfalls werden weitere Informationen zu den Pfaden bereitgestellt wie z.B. die Art der Anfrage, die benötigten Berechtigungen und die Antwort.
-Des Weiteren wird auch beschrieben, wie die Anfrage aufgebaut werden muss.
+Willkommen zur Dokumentation der CityBuild API. Diese Seite beschreibt die REST API,
+die unter `api.splatgames.de` erreichbar ist und verschiedene Pfade bietet, um auf Serverdaten zuzugreifen.
 
-## Spieler
+## Übersicht
 
-Spieler können über die REST-API abgefragt werden.
-Spieler sind die Personen, die auf dem CityBuild-Server aktiv online sind.
-Hierbei werden im Normalfall nur die Namen der Spieler abgefragt.
+1. [Allgemein](#allgemein)
+2. [Headers](#headers)
+3. [Token](#token)
+4. [Pfade](#pfade)
+5. [Response Body](#response-body)
+6. [Fehler](#fehler)
+7. [Zusammenfassung](#zusammenfassung)
 
-### GET /players
+## Allgemein
 
-#### Beschreibung
+Die REST API ist ein wesentlicher Bestandteil der CityBuild API. Sie ermöglicht es Drittanbieter-Apps, auf Serverdaten zuzugreifen, indem sie sich über unsere Login-API authentifizieren.
 
-Mit diesem Pfad können alle Spieler abgefragt werden, die sich aktuell auf dem CityBuild-Server befinden.
+:::info[API Information]
+Unsere API ist unter `api.splatgames.de` erreichbar und derzeit in der Version 1 verfügbar.
+:::
 
-#### Anfrage
+### Authentifizierung und Tokens
 
-```http
-GET /players
+Alle API-Anfragen müssen mit einem gültigen Token versehen sein,
+um den Benutzer zu identifizieren.
+Dieser Token wird an die interne API weitergegeben und dort verarbeitet.
+In speziellen Fällen müssen auch Argumente im Header mitgegeben werden,
+um die Anfrage zu spezifizieren, z.B. um Daten eines anderen Spielers abzurufen.
+
+## Headers
+
+Der Header ist ein wichtiger Bestandteil jeder Anfrage und muss im JSON-Format sein.
+Er enthält den Token und optional Argumente, die nur in speziellen Fällen benötigt werden.
+
+Ein Beispiel für einen Header:
+```json
+{
+  "token": "your_token",
+  "args": {
+    "arg1": "value1",
+    "arg2": "value2"
+  }
+}
 ```
 
-#### Antwort
+Wenn keine Argumente benötigt werden, kann das `args` Objekt leer sein oder weggelassen werden.
+
+## Token
+
+Der Token ist notwendig für die Authentifizierung und
+muss bei jeder Anfrage im Header mitgegeben werden.
+Er wird über die Login-API generiert.
+Hier ein Beispiel, wie man den Token erhält:
+
+```json
+{
+  "username": "your_username",
+  "password": "your_password"
+}
+```
+
+Ein kleiner Inside Einblick in unsere Login-API
+
+Um wie oben gezeigt den Token zu erhalten, muss der Spieler eine Anfrage an die Login-API senden.
+```http request
+GET /api/login HTTP/1.1
+Host: api.splatgames.de
+Content-Type: application/json
+
+{
+  "username": "your_username",
+  "password": "your_password"
+}
+```
+
+Die API gibt dann den Token zurück, der für weitere Anfragen genutzt werden kann:
+```json
+{
+  "username": "your_username",
+  "token": "your_token"
+}
+```
+
+Für Supportanfragen kontaktieren Sie uns bitte unter `development@splatgames.de`.
+
+## Pfade
+
+Die Pfade sind die Endpunkte der API und beginnen immer mit `/api/`. Hier einige Beispiele:
+
+  ```http request
+GET /api/players HTTP/1.1
+Host: api.splatgames.de
+Content-Type: application/json
+
+{
+  "token": "your_token"
+}
+
+  ```
+
+### Players
+
+Dieser Pfad gibt alle registrierten Spieler zurück.
+
+Spieler muss eingeloggt sein: `true`
+
+```http request
+GET /api/players HTTP/1.1
+Host: api.splatgames.de
+Content-Type: application/json
+
+  {
+    "token": "your_token"
+  }
+```
+
+#### Benötigte Rechte
+
+- `SERVER_LIST_PLAYERS`
+
+### Player
+
+Dieser Pfad gibt die Daten eines Spielers zurück.
+Nur für den eigenen Spieler möglich.
+
+Spieler muss eingeloggt sein: `true`
+
+```http request
+GET /api/player HTTP/1.1
+Host: api.splatgames.de
+Content-Type: application/json
+
+{
+  "token": "your_token"
+}
+```
+
+Der Request Body enthält immer die folgenden Informationen:
 
 ```json
 {
   "players": [
-    "Spieler1",
-    "Spieler2",
-    "Spieler3"
+    {
+      "player1": "player",
+      "player2": "player",
+      "player3": "player"
+    }
   ]
 }
 ```
 
-#### Berechtigungen
+#### Benötigte Rechte
 
-- `READ_PLAYERS`
+- `SERVER_GET_PLAYER`
+- `SERVER_GET_PLAYER_SELF`
 
-### GET /players/&#123;player&#125;
+#### Verwandte Rechte
 
-#### Beschreibung
+- `SERVER_GET_PLAYER_OTHER`
 
-Mit diesem Pfad kann ein spezifischer Spieler abgefragt werden.
+## Response Body
 
-#### Anfrage
+Der Response Body enthält die von der API zurückgegebenen Daten und ist im JSON-Format.
 
-```http
-GET /players/Spieler1
-```
-
-#### Antwort
+Hier ein Beispiel:
 
 ```json
 {
-  "player": "Spieler1"
+  "status": 200,
+  "message": "OK",
+  "data": {
+    "player": {
+      "uuid": "your_uuid",
+      "name": "your_name",
+      "rank": "your_rank",
+      "coins": "your_coins"
+    }
+  }
 }
 ```
 
-#### Berechtigungen
+#### Wichtige Felder
 
-- `READ_PLAYERS`
+Der Response Body enthält immer die folgenden Informationen:
+
+- `status`: Der Status-Code der Anfrage
+- `message`: Die Nachricht, die von der API zurückgegeben wird
+- `data`: Die Daten, die von der API zurückgegeben werden
+
+## Fehler
+
+Fehler sind wie der Name schon sagt, Fehler.
+Sie treten auf, wenn die API einen Fehler bei der Verarbeitung der Anfrage feststellt.
+
+:::info[Weitere Status-Codes]
+Es gibt noch viele weitere Status-Codes, die von der API zurückgegeben werden können.
+Diese sind jedoch die häufigsten.
+Alle Status-Codes sind unter [HTTP Status Codes](https://developer.mozilla.org/de/docs/Web/HTTP/Status) zu finden.
+:::
+
+Die Fehler sind immer Status-Codes, die von der API zurückgegeben werden.
+Hier ist eine Liste aller möglichen Status-Codes:
+
+- `400 Bad Request`: Die Anfrage war fehlerhaft
+- `401 Unauthorized`: Der Benutzer ist nicht autorisiert
+- `403 Forbidden`: Der Benutzer hat keine Berechtigung
+- `404 Not Found`: Die angeforderten Daten wurden nicht gefunden
+- `500 Internal Server Error`: Ein interner Serverfehler ist aufgetreten
+
+## Zusammenfassung
+
+Die REST API der CityBuild API ermöglicht es,
+nach erfolgreicher Authentifizierung über die Login-API auf Serverdaten zuzugreifen.
+Wichtige Bestandteile sind der Header und der Token.
+Die verschiedenen Pfade stellen Endpunkte dar,
+über die unterschiedliche Daten abgefragt werden können.
+Der Response Body liefert die angeforderten Daten,
+und Fehler werden durch entsprechende Status-Codes signalisiert.
